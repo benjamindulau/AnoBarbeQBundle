@@ -1,0 +1,22 @@
+{
+    "name":         "ano/barbeq-bundle",
+    "description":  "Bundle for integrating BarbeQ in a Symfony 2 application",
+    "keywords":     ["message", "queue", "queuing", "rabbitmq"],
+    "type":         "symfony-bundle",
+    "license":      "MIT",
+    "authors": [
+        {
+            "name":     "Benjamin Dulau",
+            "email":    "benjamin.dulau@anonymation.com",
+            "homepage": "http://www.anonymation.com"
+        }
+    ],
+    "require": {
+        "ano/barbeq": "*",
+        "symfony/framework-bundle": ">=2.0"
+    },
+    "autoload": {
+        "psr-0": { "Ano\\Bundle\\BarbeQBundle": "" }
+    },
+    "target-dir": "Ano/Bundle/BarbeQBundle"
+}
