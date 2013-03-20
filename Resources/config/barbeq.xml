@@ -7,6 +7,7 @@
         <parameter key="ano_barbeq.barbeq.class">BarbeQ\BarbeQ</parameter>
         <parameter key="ano_barbeq.adapter.amqp.class">BarbeQ\Adapter\AmqpAdapter</parameter>
         <parameter key="ano_barbeq.adapter.pdo.class">BarbeQ\Adapter\PdoAdapter</parameter>
+        <parameter key="ano_barbeq.adapter.runtime.class">BarbeQ\Adapter\RuntimeAdapter</parameter>
     </parameters>
 
     <services>
@@ -23,5 +24,6 @@
         <!-- Adapters -->
         <service id="ano_barbeq.adapter.amqp" class="%ano_barbeq.adapter.amqp.class%" public="false" />
         <service id="ano_barbeq.adapter.pdo" class="%ano_barbeq.adapter.pdo.class%" public="false" />
+        <service id="ano_barbeq.adapter.runtime" class="%ano_barbeq.adapter.runtime.class%" public="false" />
     </services>
 </container>

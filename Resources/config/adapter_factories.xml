@@ -11,6 +11,9 @@
         <service id="ano_barbeq.adapter_factory.pdo" class="Ano\Bundle\BarbeQBundle\DependencyInjection\AdapterFactory\PdoAdapterFactory">
             <tag name="ano_barbeq.adapter_factory" />
         </service>
+        <service id="ano_barbeq.adapter_factory.runtime" class="Ano\Bundle\BarbeQBundle\DependencyInjection\AdapterFactory\RuntimeAdapterFactory">
+            <tag name="ano_barbeq.adapter_factory" />
+        </service>
     </services>
 
 </container>
