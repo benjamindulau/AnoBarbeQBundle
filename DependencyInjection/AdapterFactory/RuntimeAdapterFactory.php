@@ -11,6 +11,7 @@ namespace Ano\Bundle\BarbeQBundle\DependencyInjection\AdapterFactory;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Factory for Runtime adapter
@@ -26,6 +27,7 @@ class RuntimeAdapterFactory implements AdapterFactoryInterface
     {
         $container
             ->setDefinition($id, new DefinitionDecorator('ano_barbeq.adapter.runtime'))
+            ->addMethodCall('setBarbeQ', array(new Reference('ano_barbeq.barbeq')))
         ;
     }
 
