@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="ano_barbeq.adapter_factory.amqp" class="Ano\Bundle\BarbeQBundle\DependencyInjection\AdapterFactory\AmqpAdapterFactory">
+            <tag name="ano_barbeq.adapter_factory" />
+        </service>
+        <service id="ano_barbeq.adapter_factory.pdo" class="Ano\Bundle\BarbeQBundle\DependencyInjection\AdapterFactory\PdoAdapterFactory">
+            <tag name="ano_barbeq.adapter_factory" />
+        </service>
+    </services>
+
+</container>

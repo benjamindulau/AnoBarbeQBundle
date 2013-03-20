@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="ano_barbeq.barbeq.class">BarbeQ\BarbeQ</parameter>
+        <parameter key="ano_barbeq.adapter.amqp.class">BarbeQ\Adapter\AmqpAdapter</parameter>
+        <parameter key="ano_barbeq.adapter.pdo.class">BarbeQ\Adapter\PdoAdapter</parameter>
+    </parameters>
+
+    <services>
+        <service id="ano_barbeq.message_dispatcher" class="Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="ano_barbeq.barbeq" class="%ano_barbeq.barbeq.class%">
+            <argument />
+            <argument type="service" id="ano_barbeq.message_dispatcher" />
+            <argument type="service" id="event_dispatcher" />
+        </service>
+
+        <!-- Adapters -->
+        <service id="ano_barbeq.adapter.amqp" class="%ano_barbeq.adapter.amqp.class%" public="false" />
+        <service id="ano_barbeq.adapter.pdo" class="%ano_barbeq.adapter.pdo.class%" public="false" />
+    </services>
+</container>
