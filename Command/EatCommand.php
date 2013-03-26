@@ -10,6 +10,7 @@ namespace Ano\Bundle\BarbeQBundle\Command;
 
 use BarbeQ\BarbeQEvents;
 use BarbeQ\Event\ConsumeEvent;
+use BarbeQ\Model\MessageInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
@@ -46,28 +47,48 @@ EOT
     {
         $barbeQ = $this->getBarbeQ();
 
-        $barbeQ->addListener(BarbeQEvents::PRE_CONSUME, function(ConsumeEvent $event) use ($output) {
-            $message = $event->getMessage();
-
-            $output->writeln(sprintf(
-                '<comment>%s</comment> <info>[start]</info> Queue: <comment>%s</comment> - Message <comment>#%d</comment>',
-                date('H:i:s'),
-                $message->getQueue(),
-                $message->getMetadataValue('index')
-            ));
+        $self = $this;
+        $barbeQ->addListener(BarbeQEvents::PRE_CONSUME, function(ConsumeEvent $event) use ($output, $self) {
+            $self->onPreConsume($event, $output);
         });
 
-        $barbeQ->addListener(BarbeQEvents::POST_CONSUME, function(ConsumeEvent $event) use ($output) {
-            $message = $event->getMessage();
-            $output->writeln(sprintf(
-                '<comment>%s</comment> <info>[end]</info> Memory: <comment>%s</comment> - Time: <comment>%0.04fs</comment>',
-                date('H:i:s'),
-                $message->getMemory(),
-                $message->getTime()
-            ));
+        $barbeQ->addListener(BarbeQEvents::POST_CONSUME, function(ConsumeEvent $event) use ($output, $self) {
+            $self->onPostConsume($event, $output);
         });
 
         $barbeQ->eat($input->getOption('queue'), $input->getOption('amount'));
+    }
+
+    protected function onPreConsume(ConsumeEvent $event, OutputInterface $output)
+    {
+        $message = $event->getMessage();
+
+        $output->writeln(sprintf(
+            '<comment>%s</comment> <info>[start]</info> Queue: <comment>%s</comment> - Message <comment>#%d</comment>',
+            date('H:i:s'),
+            $message->getQueue(),
+            $message->getMetadataValue('index')
+        ));
+    }
+
+    protected function onPostConsume(ConsumeEvent $event, OutputInterface $output)
+    {
+        $message = $event->getMessage();
+
+        $outputMsg = '';
+        if (MessageInterface::STATE_ERROR == $message->getState()) {
+            $outputMsg = '<comment>%s</comment> <error>[error]</error>';
+        } else {
+            $outputMsg = '<comment>%s</comment> <info>[end]</info>';
+        }
+        $outputMsg .= ' Memory: <comment>%s</comment> - Time: <comment>%0.04fs</comment>';
+
+        $output->writeln(sprintf(
+            $outputMsg,
+            date('H:i:s'),
+            $message->getMemory(),
+            $message->getTime()
+        ));
     }
 
     /**
