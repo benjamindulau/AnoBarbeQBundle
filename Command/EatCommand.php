@@ -65,7 +65,7 @@ EOT
 
         $output->writeln(sprintf(
             '<comment>%s</comment> <info>[start]</info> Queue: <comment>%s</comment> - Message <comment>#%d</comment>',
-            date('H:i:s'),
+            date('Y-m-d H:i:s'),
             $message->getQueue(),
             $message->getMetadataValue('index')
         ));
@@ -85,7 +85,7 @@ EOT
 
         $output->writeln(sprintf(
             $outputMsg,
-            date('H:i:s'),
+            date('Y-m-d H:i:s'),
             $message->getMemory(),
             $message->getTime()
         ));
