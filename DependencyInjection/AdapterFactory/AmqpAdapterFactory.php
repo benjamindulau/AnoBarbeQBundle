@@ -93,6 +93,7 @@ class AmqpAdapterFactory implements AdapterFactoryInterface
                     ->children()
                         ->scalarNode('delivery_mode')->defaultValue(2)->end()
                         ->scalarNode('content_type')->defaultValue('text/plain')->end()
+                        ->scalarNode('requeue_on_error')->defaultTrue()->end()
                     ->end()
                 ->end()
             ->end()
